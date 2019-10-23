@@ -493,6 +493,14 @@ config VIDEO_APTINA_PLL
 config VIDEO_SMIAPP_PLL
 	tristate
 
+config VIDEO_IMX214
+	tristate "Sony imx214 sensor support"
+	depends on VIDEO_V4L2 && I2C
+	depends on MEDIA_CAMERA_SUPPORT
+	select V4L2_FWNODE
+	help
+	  This driver supports IMX214 cameras from Sony
+
 config VIDEO_IMX219
 	tristate "Sony imx219 sensor support"
 	depends on VIDEO_V4L2 && I2C
@@ -1039,6 +1047,15 @@ config VIDEO_JX_H65
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called jx_h65.
+
+config VIDEO_XC7080_XC530
+	tristate "SOI XC7080_XC530 sensor support"
+	depends on VIDEO_V4L2 && I2C && VIDEO_V4L2_SUBDEV_API
+	help
+	  Support for the XCHIP XC7080_XC530 sensor.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called xc7080_xc530.
 
 config VIDEO_PREISP_DUMMY_SENSOR
 	tristate "Preisp dummy sensor support"
