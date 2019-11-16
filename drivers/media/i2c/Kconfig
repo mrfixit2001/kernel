@@ -525,6 +525,14 @@ config VIDEO_IMX258_EEPROM
 	help
 	  This driver supports IMX258 OTP load from eeprom.
 
+config VIDEO_IMX307
+	tristate "Sony imx307 sensor support"
+	depends on VIDEO_V4L2 && I2C
+	depends on MEDIA_CAMERA_SUPPORT
+	select V4L2_FWNODE
+	help
+	  This driver supports IMX307 cameras from Sony
+
 config VIDEO_IMX317
 	tristate "Sony imx317 sensor support"
 	depends on VIDEO_V4L2 && I2C
@@ -628,6 +636,18 @@ config VIDEO_OV4689
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called ov4689.
+
+config VIDEO_OV5640
+	tristate "OmniVision OV5640 sensor support"
+	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
+	depends on MEDIA_CAMERA_SUPPORT
+	select V4L2_FWNODE
+	help
+	  This is a Video4Linux2 sensor-level driver for the OmniVision
+	  OV5640 camera.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ov5640.
 
 config VIDEO_OV5647
 	tristate "OmniVision OV5647 sensor support"
@@ -835,6 +855,15 @@ config VIDEO_MT9V032
 	  This is a Video4Linux2 sensor-level driver for the Micron
 	  MT9V032 752x480 CMOS sensor.
 
+config VIDEO_AR0144
+	tristate "Aptina AR0144 sensor support"
+	depends on VIDEO_V4L2 && I2C && MEDIA_CONTROLLER
+	depends on MEDIA_CAMERA_SUPPORT
+	select V4L2_FWNODE
+	help
+	  This is a Video4Linux2 sensor-level driver for the Aptina
+	  AR0144 camera.
+
 config VIDEO_AR0230
 	tristate "Aptina AR0230 sensor support"
 	depends on VIDEO_V4L2 && I2C && MEDIA_CONTROLLER
@@ -1029,6 +1058,15 @@ config VIDEO_GC2035
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called gc2035.
+
+config VIDEO_BF20A2
+	tristate "BYD BF20A2 sensor support"
+	depends on VIDEO_V4L2 && I2C && VIDEO_V4L2_SUBDEV_API
+	help
+	  Support for the BYD BF20A2 sensor.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called BF20A2.
 
 config VIDEO_BF3925
 	tristate "BYD BF3925 sensor support"

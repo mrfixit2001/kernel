@@ -23,11 +23,24 @@
 			"IN1P", "Mic Jack",
 			"Headphone Jack", "HPOL",
 			"Headphone Jack", "HPOR";
-		simple-audio-card,cpu {
-			sound-dai = <&i2s_8ch>;
+		simple-audio-card,dai-link@0 {
+			format = "i2s";
+			cpu {
+				sound-dai = <&i2s_8ch>;
+			};
+			codec {
+				sound-dai = <&rt5640>;
+			};
 		};
-		simple-audio-card,codec {
-			sound-dai = <&rt5640>;
+
+		simple-audio-card,dai-link@1 {
+			format = "i2s";
+			cpu {
+				sound-dai = <&i2s_8ch>;
+			};
+			codec {
+				sound-dai = <&hdmi>;
+			};
 		};
 	};
 
@@ -62,6 +75,15 @@
 		enable-active-high;
 		regulator-always-on;
 		regulator-boot-on;
+	};
+
+	vcc_lcd: vcc-lcd-regulator {
+		compatible = "regulator-fixed";
+		gpio = <&gpio3 RK_PD5 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&lcd_pwr>;
+		regulator-name = "vcc_lcd";
+		enable-active-high;
 	};
 
 	backlight: backlight {
@@ -221,7 +243,7 @@
 		status = "okay";
 	};
 
-	4G-Modem {
+	rk_modem: rk-modem {
 		compatible="4g-modem-platdata";
 		pinctrl-names = "default";
 		pinctrl-0 = <&lte_vbat &lte_power_en &lte_reset>;
@@ -640,6 +662,7 @@
 		reg = <0x40>;
 		screen_max_x = <1920>;
 		screen_max_y = <1200>;
+		power-supply = <&vcc_lcd>;
 		touch-gpio = <&gpio0 12 IRQ_TYPE_LEVEL_LOW>;
 		reset-gpio = <&gpio0 11 GPIO_ACTIVE_HIGH>;
 		status = "okay";
@@ -744,8 +767,7 @@
 		compatible = "sitronix,st7703", "simple-panel-dsi";
 		reg = <0>;
 		backlight = <&backlight>;
-		/* power-supply = <&vcc_sys>; */
-		enable-gpios = <&gpio3 RK_PD5 GPIO_ACTIVE_HIGH>;
+		power-supply = <&vcc_lcd>;
 		prepare-delay-ms = <2>;
 		reset-delay-ms = <1>;
 		init-delay-ms = <20>;
@@ -813,6 +835,7 @@
 };
 
 &hdmi {
+	#sound-dai-cells = <0>;
 	status = "okay";
 };
 
@@ -824,6 +847,12 @@
 	camera {
 		camera_pwr: camera-pwr {
 			rockchip,pins = <0 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	lcd {
+		lcd_pwr: lcd-pwr {
+			rockchip,pins = <3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 
@@ -889,7 +918,7 @@
 		};
 	};
 
-	4G-Modem {
+	rk-modem {
 		lte_vbat: lte-vbat {
 			rockchip,pins = <0 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
