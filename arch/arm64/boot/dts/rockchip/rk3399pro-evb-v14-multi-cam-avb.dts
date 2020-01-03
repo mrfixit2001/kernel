@@ -8,8 +8,8 @@
 #include "rk3399pro-evb-v11-avb.dts"
 
 / {
-	model = "Rockchip RK3399pro evb v13 multi camera avb board";
-	compatible = "rockchip,rk3399pro-evb-v13-multi-cam-avb", "rockchip,rk3399pro";
+	model = "Rockchip RK3399pro evb v14 multi camera avb board";
+	compatible = "rockchip,rk3399pro-evb-v14-multi-cam-avb", "rockchip,rk3399pro";
 
 	chosen: chosen {
 		bootargs = "console=ttyFIQ0 androidboot.baseband=N/A androidboot.wificountrycode=US androidboot.veritymode=enforcing androidboot.hardware=rk30board androidboot.console=ttyFIQ0 firmware_class.path=/vendor/etc/firmware init=/init rootwait ro init=/init androidboot.selinux=permissive";
@@ -138,10 +138,11 @@
 	status = "okay";
 };
 
-&i2c4 {
+&i2c1 {
 	status = "okay";
 	i2c-scl-rising-time-ns = <345>;
 	i2c-scl-falling-time-ns = <11>;
+	pinctrl-0 = <&i2c1_xfer>, <&cam_pwren_high>;
 
 	jaguar1: jaguar1@30 {
 		compatible = "jaguar1-v4l2";
